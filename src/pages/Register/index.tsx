@@ -1,8 +1,8 @@
-export const Register = () => {
+export const RegisterPage = () => {
 
     return (
         <>
-
+            register
         </>
     )
 }

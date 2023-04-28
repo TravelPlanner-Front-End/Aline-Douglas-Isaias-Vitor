@@ -1,6 +1,6 @@
-// import axios from 'axios';
+import axios from "axios";
 
-// export const api = axios.create({
-//   baseURL: 'Base URL aqui',
-//   timeout: 8000,
-// });
+export const api = axios.create({
+  baseURL: "https://json-serve-travel-planner.onrender.com/",
+  timeout: 3000,
+});

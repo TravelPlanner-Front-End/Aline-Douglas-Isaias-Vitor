@@ -1,25 +1,22 @@
 import { ForwardedRef, InputHTMLAttributes, forwardRef } from "react";
 import { StyledFieldset } from "./style";
+import { FieldError } from "react-hook-form";
 
 interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
-  error?: string;
+  error?: FieldError;
+  type: string;
+  id: string;
 }
 
-const Input = forwardRef(
-  (
-    { type, label, id, error, ...rest }: IInputProps,
-    ref: ForwardedRef<HTMLInputElement>
-  ) => {
-    return (
-      <div>
-        <fieldset>
-          <input type={type} ref={ref} id={id} {...rest} />
-          <label htmlFor={id}>{label}</label>
-        </fieldset>
-      </div>
-    );
-  }
-);
+const Input = forwardRef(({ type, label, id, error, ...rest }: IInputProps, ref: ForwardedRef<HTMLInputElement>) => {
+  return (
+    <div>
+      {label ? <label>{label}</label> : null}
+      <input type={type} ref={ref} id={id} {...rest} />
+      {error ? error.message : null}
+    </div>
+  );
+});
 
 export default Input;
