@@ -1,8 +1,17 @@
-// const Router = () => {
-//     return (
+import { Route, Routes } from "react-router-dom";
+import { LoginPage } from "../pages/Login";
+import { RegisterPage } from "../pages/Register";
+
+const RoutesMain = () => {
+  return (
+    <Routes>
+      <Route path="/" element={<LoginPage />} />
+      <Route path="/register" element={<RegisterPage />}  />
+    </Routes>
+  );
+};
+
+export default RoutesMain;
     
-//     );
-//   };
   
-//   export default Router;
   
