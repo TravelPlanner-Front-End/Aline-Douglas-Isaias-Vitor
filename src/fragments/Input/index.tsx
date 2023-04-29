@@ -14,7 +14,7 @@ const Input = forwardRef(({ type, label, id, error, ...rest }: IInputProps, ref:
     <div>
       {label ? <label>{label}</label> : null}
       <input type={type} ref={ref} id={id} {...rest} />
-      {error ? error.message : null}
+      {error ? <span>{error.message}</span> : null}
     </div>
   );
 });

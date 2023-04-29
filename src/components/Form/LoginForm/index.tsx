@@ -29,6 +29,7 @@ const LoginForm = () => {
         disabled={loading}
         {...register("email")}
       />
+
       <Input
         type="password"
         id="password"
@@ -38,8 +39,9 @@ const LoginForm = () => {
         disabled={loading}
         {...register("password")}
       />
+      
       <button type="submit">{loading ? "Entrando..." : "Entrar"}</button>
-      <Link to="/pagina de cardastro">Cadastre-se</Link>
+      <Link to="/pagina de cardastro">Cadastre-se</Link>//** COLOCAR AQUI ENDEREÇO DA PÁGINA **//
     </form>
   );
 };
