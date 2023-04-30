@@ -35,7 +35,7 @@ export const UserProvider = ({ children }: IUserProviderPops) => {
       console.log('deu certo')
 
     } catch (error) {
-      console.error(error)      
+      // console.error(error)      
     
     } finally {
       setLoading(false)
