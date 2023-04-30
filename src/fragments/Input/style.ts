@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
-export const StyledFieldset = styled.fieldset`
-
-
+export const StyledInputContainer = styled.div `
+  /* border: solid 1px red;
+  display: flex;
+  flex-direction: column; */
 `
