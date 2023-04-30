@@ -1,5 +1,4 @@
 import { ForwardedRef, InputHTMLAttributes, forwardRef } from "react";
-import { StyledFieldset } from "./style";
 import { FieldError } from "react-hook-form";
 
 interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
