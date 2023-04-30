@@ -1,9 +1,10 @@
+import { createGlobalStyle } from "styled-components";
+
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
    License: none (public domain)
 */
 
-import { createGlobalStyle } from "styled-components";
 
 export const ResetCSS = createGlobalStyle`
 
@@ -28,7 +29,9 @@ export const ResetCSS = createGlobalStyle`
 		vertical-align: baseline;
 		line-height: 150%;
 		box-sizing: border-box;
-		list-style: none; 
+		list-style: none;
+		text-decoration: none;
+		outline: none;
 	}	
 	
 	/* HTML5 display-role reset for older browsers */

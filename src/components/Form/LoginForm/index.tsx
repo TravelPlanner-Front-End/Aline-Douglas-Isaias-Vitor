@@ -5,6 +5,7 @@ import { UserContext } from "../../../providers/UserContext";
 import { TLoginSchema, loginSchema } from "../../../schemas/loginSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useContext } from "react";
+import logo from "../../../assets/Group 202.svg"
 
 const LoginForm = () => {
   const { loading, setLoading, userLogin } = useContext(UserContext);
@@ -19,6 +20,7 @@ const LoginForm = () => {
 
   return (
     <form onSubmit={handleSubmit(submitLogin)}>
+      <img src={logo} alt="Travel planner" />
       <h1>Login</h1>
       <Input
         type="text"

@@ -10,11 +10,20 @@ export const GlobalStyles = createGlobalStyle`
     --grey-3: #F8F9FA;
     --Success: #80FF9C;
     --Negative: #FF4794;
+    --red-value: #FF0000;
+    --green-value: #0B8800;
     --font-default: "Inter", sans-serif;
     --shadow: 0px 4px 40px -10px #00000040;
-    --radius-default: 6.25rem;
-    --radius-form1: 0.25rem; 
-    --radius-form2: 0.625rem; 
+    --radius-default: 6.25rem; 
+    --radius-form: 0.625rem; 
+  }
+
+  body {
+    font-family: var(--font-default);
+  }
+
+  button a {
+    cursor: pointer;
   }
 
 ` 
