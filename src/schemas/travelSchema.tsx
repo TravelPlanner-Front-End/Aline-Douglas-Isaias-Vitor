@@ -12,4 +12,4 @@ export const travelSchema = z.object({
   others: z.string().min(1, "Campo obrigatório"),
 });
 
-export type TLoginSchema = z.infer<typeof travelSchema>;
+export type TTravelSchema = z.infer<typeof travelSchema>;
