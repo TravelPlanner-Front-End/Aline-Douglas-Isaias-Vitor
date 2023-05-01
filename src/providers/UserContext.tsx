@@ -1,15 +1,19 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { TLoginSchema } from "../schemas/loginSchema";
 import { api } from "../services/api";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 interface IUserProviderPops {
   children: React.ReactNode;
 }
 
 interface IUserContext {
-  userLogin: (loginData: TLoginSchema, setLoading: React.Dispatch<React.SetStateAction<boolean>>) => Promise<void>
+  userLogin: (loginData: TLoginSchema, setLoading: React.Dispatch<React.SetStateAction<boolean>>) => Promise<void>;
   loading: boolean;
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  user: IUser | null;
+  userLogout: () => void;
 }
 
 interface IUser {
@@ -21,6 +25,8 @@ interface IUser {
 export const UserContext = createContext({} as IUserContext) 
 
 export const UserProvider = ({ children }: IUserProviderPops) => {
+  const navigate = useNavigate();
+
   const [user, setUser] = useState<IUser | null>(null)
 
   const [loading, setLoading] = useState(false)
@@ -32,18 +38,70 @@ export const UserProvider = ({ children }: IUserProviderPops) => {
       const { data } = await api.post("login", loginData);
       localStorage.setItem("@TRAVELER:TOKEN", data.accessToken)
       localStorage.setItem("@TRAVELER:ID", data.user.id)
-      console.log('deu certo')
+      
+      setUser(data.user)
 
+      toast.success("Login realizado com sucesso !")
+      setTimeout(() => {
+        navigate("/home")
+      }, 3000)
+      
     } catch (error) {
       // console.error(error)      
     
+      toast.error("E-mail ou senha incorretos, tente novamente !")
+
     } finally {
       setLoading(false)
     }
   }
 
+  useEffect(() => {
+    const token = localStorage.getItem("@TRAVELER:TOKEN")
+    const userID = localStorage.getItem("@TRAVELER:ID")
+
+    const autoLog = async () => {
+      try {
+        const { data } = await api.get(`/users/${userID}`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          },
+        });
+        setUser(data);
+        navigate("/home");
+        
+      } catch (error) {
+        console.error(error);
+
+        setTimeout(() => {
+          localStorage.removeItem("@TRAVELER:TOKEN")
+          localStorage.removeItem("@TRAVELER:ID")
+        }, 5000);      
+      }
+    }
+    if(token && userID) {
+      autoLog();
+    }
+  }, []);
+
+  const userLogout = () => {
+    localStorage.removeItem("@TRAVELER:TOKEN")
+    localStorage.removeItem("@TRAVELER:ID")
+
+    toast.success("Você saiu da aplicação, e será redirecionado para fazer login !", {
+      iconTheme:{
+        primary: "#1d46ce",
+        secondary: "#ffffff"
+      },
+    });
+
+    setTimeout(() => {
+      navigate("/");
+    },3000);
+  }
+
   return (
-    <UserContext.Provider value={{ loading, setLoading, userLogin }}>
+    <UserContext.Provider value={{ loading, user, setLoading, userLogin, userLogout }}>
       {children}
     </UserContext.Provider>
   )
