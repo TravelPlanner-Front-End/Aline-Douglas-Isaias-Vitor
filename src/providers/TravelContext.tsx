@@ -1,6 +1,5 @@
 import { createContext, useContext, useState } from "react";
 import { api } from "../services/api";
-import { v4 as uuidv4 } from "uuid";
 import { toast } from "react-hot-toast";
 import { IRegisterNewValueForm } from "../components/Form/RegisterNewValueForm";
 
@@ -36,7 +35,6 @@ export const TravelProvider = ({ children }: ITravelProviderProps) => {
       ...formData,
       userId: idLocalStorage,
       travelId: "inserir id da travel",
-      //id: uuidv4(),
     };
     try {
       const response = await api.post("/savings", body, {
