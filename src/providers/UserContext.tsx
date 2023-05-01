@@ -47,7 +47,7 @@ export const UserProvider = ({ children }: IUserProviderPops) => {
       }, 3000)
       
     } catch (error) {
-      console.error(error)      
+      // console.error(error)      
     
       toast.error("E-mail ou senha incorretos, tente novamente !")
 

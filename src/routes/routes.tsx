@@ -10,13 +10,9 @@ const RoutesMain = () => {
       <Route path="/" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />}  />
       <Route path="/home" element={<HomePage />}  />
-      <Route path="*" element={<NotFound />}>
-      </Route>
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };
 
 export default RoutesMain;
-    
-  
-  

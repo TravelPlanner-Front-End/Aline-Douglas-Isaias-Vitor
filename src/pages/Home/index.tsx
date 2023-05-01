@@ -1,13 +1,15 @@
-import { useContext } from "react"
-import { UserContext } from "../../providers/UserContext"
+import { Toaster } from "react-hot-toast";
+import { RegisterNewValueForm } from "../../components/Form/RegisterNewValueForm";
+import { SavingsList } from "../../components/SavingsList";
 
 export const HomePage = () => {
-    const { userLogout } = useContext(UserContext)
 
-    return (
-        <>
-            <h1>home page</h1>
-            <button onClick={() => userLogout()}>Sair</button>
-        </>
-    )
-}
+
+  return (
+    <>
+      <Toaster position="bottom-right" reverseOrder={false} />
+      <RegisterNewValueForm />
+      <SavingsList/>
+    </>
+  );
+};
