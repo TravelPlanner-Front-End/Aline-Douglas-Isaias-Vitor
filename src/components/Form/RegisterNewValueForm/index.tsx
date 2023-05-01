@@ -29,7 +29,7 @@ export const RegisterNewValueForm = () => {
     <>
       <StyledForm onSubmit={handleSubmit(submit)}>
         <Input
-          error={errors.month?.message}
+          error={errors.month}
           label="Mês"
           id="month"
           type="text"
@@ -37,7 +37,7 @@ export const RegisterNewValueForm = () => {
           {...register("month")}
         />
         <Input
-          error={errors.value?.message}
+          error={errors.value}
           label="Valor economizado"
           id="value"
           type="number"
