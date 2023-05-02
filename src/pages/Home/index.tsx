@@ -7,7 +7,7 @@ export const HomePage = () => {
     <>
       <Toaster position="bottom-right" reverseOrder={false} />
       <RegisterNewValueForm />
-      {/* <SavingsList/> */}
+      <SavingsList/>
     </>
   );
 };
