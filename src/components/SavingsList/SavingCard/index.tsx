@@ -15,13 +15,13 @@ export const SavingsCard = () => {
       ))} */}
 
       <StyledLi>
-        <h3>Em Fevereiro economizei: R$ 500,00</h3>
+        <h3>Em Fevereiro economizei: <span>R$ 500,00</span></h3>
       </StyledLi>
       <StyledLi>
-        <h3>Em Março economizei: R$ 500,00</h3>
+        <h3>Em Março economizei: <span>R$ 500,00</span></h3>
       </StyledLi>
       <StyledLi>
-        <h3>Em Abril economizei: R$ 500,00</h3>
+        <h3>Em Abril economizei: <span>R$ 500,00</span></h3>
       </StyledLi>
     </>
   );
