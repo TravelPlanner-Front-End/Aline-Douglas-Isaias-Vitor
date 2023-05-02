@@ -1,8 +1,12 @@
-export const Header = () => {
+import { useContext } from "react";
+import { UserContext } from "../../providers/UserContext";
 
-    return (
-        <>
-        
-        </>
-    )
-}
+export const Header = () => {
+  const { user } = useContext(UserContext);
+  
+  return (
+    <header>
+      {/* <h1>Olá, <span>{user?.email}</span></h1> */}
+    </header>
+  );
+};
