@@ -5,4 +5,4 @@ export const newValueSchema = z.object({
   value: z.number().min(1, "Campo obrigatório"),
 });
 
-export type TLoginSchema = z.infer<typeof newValueSchema>;
+export type TNewValueSchema = z.infer<typeof newValueSchema>;

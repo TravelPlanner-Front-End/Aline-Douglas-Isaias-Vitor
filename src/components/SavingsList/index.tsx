@@ -10,14 +10,14 @@ export const SavingsList = () => {
 
       useEffect(() => {
       loadSavings();
-    });
+    }); // *** Falta adicionar o array de dependências }, []) *** //
   
     return (
       <StyledDiv>
         <ul>
-            <SavingsCard/>
+          <SavingsCard/>
         </ul>
-            <div><p>Total economizado: {}</p></div>
+          <div><p>Total economizado: {}</p></div>
       </StyledDiv>
     );
   };

@@ -1,8 +1,10 @@
 import { StyledForm } from "./style";
-import { newValueSchema } from "../../../schemas/newValueSchema";
+import { TNewValueSchema, newValueSchema } from "../../../schemas/newValueSchema";
 import Input from "../../../fragments/Input";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+// import { useContext } from "react";
+// import { TravelContext } from "../../../providers/TravelContext";
 import { useTravelContext } from "../../../providers/TravelContext";
 
 export interface IRegisterNewValueForm {
@@ -17,11 +19,11 @@ export const RegisterNewValueForm = () => {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<IRegisterNewValueForm>({
+  } = useForm<TNewValueSchema>({
     resolver: zodResolver(newValueSchema),
   });
 
-  const submit: SubmitHandler<IRegisterNewValueForm> = (formData) => {
+  const submit: SubmitHandler<TNewValueSchema> = (formData) => {
     addNewValue(formData);
   };
 
