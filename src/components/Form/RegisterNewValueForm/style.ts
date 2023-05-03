@@ -15,6 +15,8 @@ button {
     width: 100%;
     height: 48px;
 
+    margin-top: 16px;
+
     border: none;
     border-radius: 100px;
 
@@ -25,6 +27,13 @@ button {
     font-size: 16px;
     line-height: 26px;
     color: var(--grey-4);
+}
+
+@media (min-width: 769px) {
+    width: 25%;
+
+    margin-top: 185px;
+    margin-left: 100px;
 }
 
 `

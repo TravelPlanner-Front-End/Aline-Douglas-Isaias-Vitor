@@ -1,7 +1,15 @@
-import { createContext, useContext, useState } from "react";
+import {
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { api } from "../services/api";
 import { toast } from "react-hot-toast";
 import { IRegisterNewValueForm } from "../components/Form/RegisterNewValueForm";
+import { UserContext } from "./UserContext";
 import { TTravelSchema } from "../schemas/travelSchema";
 
 interface ITravelProviderProps {
@@ -12,12 +20,34 @@ interface ITravelContext {
   addNewValue: (formData: IRegisterNewValueForm) => Promise<void>;
   loadSavings: () => Promise<void>;
   savings: ISaving[];
-  newTravel: (formData: TTravelSchema) => Promise<void>;
-  setIsOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
+  travel: ITravel | null;
+  setIsOpenModal: Dispatch<SetStateAction<boolean>>;
   isOpenModal: boolean;
+  newTravel: (formData: TTravelSchema) => Promise<void>;
 }
 
-interface ISaving {
+interface ITravel {
+  local: string;
+  userId: number;
+  id: number;
+  month: string;
+  initialValue: number;
+  accommodation: number;
+  food: number;
+  transport: number;
+  shopping: number;
+  others: number;
+}
+
+// interface ISaving {
+//   email: string;
+//   password: string;
+//   name: string;
+//   savings: ISaving[] | null;
+//   travel: ITravel | null | undefined;
+// }
+
+export interface ISaving {
   month: string;
   value: number;
   userId: number;
@@ -25,12 +55,47 @@ interface ISaving {
   id: number;
 }
 
+// {
+//   "local": "são paulo",
+//   "userId": 2,
+//   "id": 2,
+//   "month": "abril",
+//   "initialValue": 300,
+//   "tours": 400,
+//   "accommodation": 500,
+//   "food": 500,
+//   "transport": 600,
+//   "shopping": 700,
+//   "others": 200
+// }
+
+interface ITravel {
+  accommodation: number;
+  food: number;
+  id: number;
+  initialValue: number;
+  local: string;
+  month: string;
+  others: number;
+  shopping: number;
+  tours: number;
+  transport: number;
+  userId: number;
+  travel: ISaving[];
+}
+
 export const TravelContext = createContext({} as ITravelContext);
 
 export const TravelProvider = ({ children }: ITravelProviderProps) => {
-  const [savings, setSavings] = useState([]);
+  // const [savings, setSavings] = useState<ISaving>({} as ISaving);
 
-  const [travel, setTravel] = useState([]);
+  const { user } = useContext(UserContext);
+
+  const [savings, setSavings] = useState<ISaving[]>([]);
+  const [travel, setTravel] = useState(null);
+  const [travelId, setTravelId] = useState(null);
+
+  //const [travel, setTravel] = useState([]);
 
   const [isOpenModal, setIsOpenModal] = useState(false);
 
@@ -51,7 +116,8 @@ export const TravelProvider = ({ children }: ITravelProviderProps) => {
         },
       });
 
-      setTravel(data);
+      //setTravel(data);
+      loadSavings();
 
       setIsOpenModal(false);
 
@@ -66,7 +132,7 @@ export const TravelProvider = ({ children }: ITravelProviderProps) => {
     const body = {
       ...formData,
       userId: idLocalStorage,
-      travelId: "inserir id da travel",
+      travelId: travelId,
     };
     try {
       const response = await api.post("/savings", body, {
@@ -74,8 +140,7 @@ export const TravelProvider = ({ children }: ITravelProviderProps) => {
           Authorization: `Bearer ${tokenLocalStorage}`,
         },
       });
-      console.log(response);
-      //   setSavings([...savings, response]);
+      setSavings([...savings, response.data]);
     } catch (error) {
       console.log(error);
       toast.error("Ops! Algo deu errado.");
@@ -84,17 +149,45 @@ export const TravelProvider = ({ children }: ITravelProviderProps) => {
 
   const loadSavings = async () => {
     try {
-      const { data } = await api.get(`users/${idLocalStorage}?_embed=travel`, {
-        headers: {
-          Authorization: `Bearer ${tokenLocalStorage}`,
-        },
-      });
-      setSavings(data.savings);
+      const { data } = await api.get(
+        `users/${idLocalStorage}?_embed=savings&_embed=travel`,
+        {
+          headers: {
+            Authorization: `Bearer ${tokenLocalStorage}`,
+          },
+        }
+      );
+      console.log(data);
+      setTravel(data.travel[0] || null);
+      setTravelId(data.travel[0].id || null);
+      setSavings(data.savings || []);
     } catch (error) {
       console.log(error);
       toast.error("Ops! Algo deu errado.");
     }
   };
+  useEffect(() => {
+    if (tokenLocalStorage && idLocalStorage) {
+      loadSavings();
+    }
+  }, [user]);
+
+  /** 
+  // const getUserTravel = async () => {
+  //   try {
+  //     const response = await api.get(`travel/${idLocalStorage}`, {
+  //       headers: {
+  //         Authorization: `Bearer ${tokenLocalStorage}`
+  //       }
+  //     })  // *** Caso precisem usar, sintam-se a vontade, caso não podem apagar *** //
+  //     console.log(data)
+  //   } catch (error) {
+  //     console.error(error)
+  //   }
+  //   return response
+  // }
+  // getUserTravel()
+  **/
 
   return (
     <TravelContext.Provider
@@ -105,6 +198,7 @@ export const TravelProvider = ({ children }: ITravelProviderProps) => {
         setIsOpenModal,
         isOpenModal,
         newTravel,
+        travel,
       }}
     >
       {children}

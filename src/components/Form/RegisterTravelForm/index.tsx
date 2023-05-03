@@ -62,7 +62,7 @@ export const RegisterTravelForm = () => {
         <div className="inputsRight">
           <Input
             type="text"
-            id="destino"
+            id="local"
             label="Destino"
             placeholder="Digite aqui o destino da viagem"
             disabled={loading}

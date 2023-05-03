@@ -29,7 +29,7 @@ span {
 @media(min-width: 769px) {
     height: 70px;
 
-    font-size: 24px;
+    font-size: 16px;
 }
 
 `

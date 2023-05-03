@@ -1,14 +1,29 @@
 import { useContext } from "react";
+import { UserContext } from "../../providers/UserContext";
 import { TravelContext } from "../../providers/TravelContext";
 
 export const Header = () => {
-  const { setIsOpenModal, isOpenModal } = useContext(TravelContext);
-  console.log(isOpenModal);
+  const { user, userLogout } = useContext(UserContext);
+  const { travel } = useContext(TravelContext);
+
   return (
     <>
-      <header>
-        <button onClick={() => setIsOpenModal(true)}>add viagem</button>
-      </header>
+      {travel ? (
+        <header>
+          <h1>
+            Olá, <span>{user?.name}</span>
+          </h1>
+          <button>Excluir planejamento</button>
+          <button onClick={() => userLogout()}>Sair</button>
+        </header>
+      ) : (
+        <header>
+          <h1>
+            Olá, <span>{user?.name}</span>
+          </h1>
+          <button onClick={() => userLogout()}>Sair</button>
+        </header>
+      )}
     </>
   );
 };
