@@ -9,7 +9,7 @@ export const StyledInputContainer = styled.div `
 
   label {
 
-    margin-bottom: 16px;
+    margin: 16px 0;
 
     font-style: normal;
     font-weight: 400;
@@ -21,8 +21,6 @@ export const StyledInputContainer = styled.div `
   input {
     height: 48px;
 
-    margin-bottom: 16px;
-
     border: 1px solid var(--grey-0);
 
     padding-left: 16px;
@@ -30,4 +28,10 @@ export const StyledInputContainer = styled.div `
     border-radius: 100px;
   }
 
+  span {
+    margin-top: 5px;
+
+    font-size: 10px;
+    color: var(--red-value)
+  }
 `
