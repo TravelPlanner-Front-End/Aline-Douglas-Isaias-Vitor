@@ -46,6 +46,14 @@ p {
 }
 
 @media(min-width: 769px) {
+        width: 45%;
+        
+        margin-top: 0;
+    
+        position: fixed;
+        top: 185px;
+        right: 100px;
+
     div {
         height: 70px;
     }
@@ -53,6 +61,7 @@ p {
     p {
         font-size: 25px;
     }
+
 
 }
 

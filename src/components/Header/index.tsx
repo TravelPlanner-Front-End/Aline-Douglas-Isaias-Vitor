@@ -4,11 +4,11 @@ import { TravelContext } from "../../providers/TravelContext";
 
 export const Header = () => {
   const { user, userLogout } = useContext(UserContext);
-  const { savings } = useContext(TravelContext);
+  const { travel } = useContext(TravelContext);
 
  return (
   <>
-    {savings.travel?.length !== 0 ?  (
+    {travel ?  (
       <header>
         <h1>Olá, <span>{user?.name}</span></h1> 
         <button>Excluir planejamento</button>

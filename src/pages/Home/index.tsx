@@ -4,17 +4,19 @@ import { Header } from "../../components/Header";
 import { useContext } from "react";
 import { TravelContext } from "../../providers/TravelContext";
 import toggleImg from "../../assets/vector-dashboard-vazio 1.svg"
+import { FinancialSummary } from "../../components/FinancialSummary";
 
 export const HomePage = () => {
-  const { savings } = useContext(TravelContext); 
+  const { travel } = useContext(TravelContext); 
   
   return (
     <>
       <Header />
-      {savings.travel?.length !== 0 ? (
+      {travel ? (
         <>
           <RegisterNewValueForm />
-          <SavingsList/>
+          <SavingsList />
+          <FinancialSummary />
         </>
       ) : (
         <div>
