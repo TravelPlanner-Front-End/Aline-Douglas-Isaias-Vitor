@@ -27,31 +27,55 @@ export const FinancialSummary = () => {
 
   const missingValue = total - totalSavings;
 
-  // const monthsUntilTheTrip = travel?.month - savings?.length
+  // const monthsUntilTheTrip = travel?.month - savings.length
   // {monthsUntilTheTrip}
 
   return (
-    <StyledDiv>
-      <p>
-        Custo total da viagem{" "}
-        <span className="totalTripCostAndMonths">
-          {total.toLocaleString("pt-br", {
-            style: "currency",
-            currency: "BRL",
-          })}
-        </span>
-      </p>
-      {missingValue >= total ? (
-        <p>
-          Valor faltante <span className="missingValue">{missingValue}</span>
-        </p>
+    <>
+      {savings ? (
+        <StyledDiv>
+          <p>
+            Custo total da viagem{" "}
+            <span className="totalTripCostAndMonths">
+              {total.toLocaleString("pt-br", {
+                style: "currency",
+                currency: "BRL",
+              })}
+            </span>
+          </p>
+          {missingValue >= total ? (
+            <p>
+              Valor faltante{" "}
+              <span className="missingValue">{missingValue}</span>
+            </p>
+          ) : (
+            <p>Você já economizou o valor necessário</p>
+          )}
+          <p>
+            Faltam <span className="totalTripCostAndMonths"></span> meses para a
+            viagem
+          </p>
+        </StyledDiv>
       ) : (
-        <p>Você já economizou o valor necessário</p>
+        <StyledDiv>
+          <p>
+            Custo total da viagem{" "}
+            <span className="totalTripCostAndMonths">
+              {total.toLocaleString("pt-br", {
+                style: "currency",
+                currency: "BRL",
+              })}
+            </span>
+          </p>
+          <p>
+            <span className="missingValue">{`R$ ${{ total }}`}</span>
+          </p>
+          <p>
+            Faltam <span className="totalTripCostAndMonths"></span> meses para a
+            viagem
+          </p>
+        </StyledDiv>
       )}
-      <p>
-        Faltam <span className="totalTripCostAndMonths"></span> meses para a
-        viagem
-      </p>
-    </StyledDiv>
+    </>
   );
 };

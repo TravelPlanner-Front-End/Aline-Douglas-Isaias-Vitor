@@ -4,7 +4,7 @@ import { SavingsCard } from "./SavingCard";
 import { v4 as uuidv4 } from "uuid";
 
 export const SavingsList = () => {
-  const {travel, savings } = useTravelContext();
+  const { travel, savings } = useTravelContext();
 
   const initialValue = travel?.initialValue;
 
@@ -16,16 +16,23 @@ export const SavingsList = () => {
       initialValue ? Number(initialValue) : 0
     );
   }
-  
+
   return (
     <StyledDiv>
       <ul>
-        {savings ? savings.map((saving) => <SavingsCard key={uuidv4()} saving={saving} />)
+        {savings
+          ? savings.map((saving) => (
+              <SavingsCard key={uuidv4()} saving={saving} />
+            ))
           : null}
       </ul>
-      <div>
-        <p>Total economizado: {total}</p>
-      </div>
+      {savings ? (
+        <div>
+          <p>Total economizado: {`R$ ${total}`}</p>
+        </div>
+      ) : (
+        <p>Cadastre sua primeira econimia</p>
+      )}
     </StyledDiv>
   );
 };
