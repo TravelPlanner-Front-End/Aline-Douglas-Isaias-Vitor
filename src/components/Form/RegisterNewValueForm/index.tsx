@@ -3,9 +3,9 @@ import { TNewValueSchema, newValueSchema } from "../../../schemas/newValueSchema
 import Input from "../../../fragments/Input";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-// import { useContext } from "react";
-// import { TravelContext } from "../../../providers/TravelContext";
-import { useTravelContext } from "../../../providers/TravelContext";
+import { useContext } from "react";
+import { TravelContext } from "../../../providers/TravelContext";
+// import { useTravelContext } from "../../../providers/TravelContext";
 
 export interface IRegisterNewValueForm {
   month: string;
@@ -13,7 +13,7 @@ export interface IRegisterNewValueForm {
 }
 
 export const RegisterNewValueForm = () => {
-  const { addNewValue } = useTravelContext();
+  const { addNewValue } = useContext(TravelContext);
 
   const {
     register,

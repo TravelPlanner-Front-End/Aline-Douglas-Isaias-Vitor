@@ -15,13 +15,21 @@ interface IUserContext {
   user: IUser | null;
   userLogout: () => void;
   getUserLog: () => Promise<void>
+  // setUser: React.Dispatch<React.SetStateAction<IUser | null>>
 }
 
 interface IUser {
   id: number;
   email: string;
+  name: string;
   password: string;
+  // travel?: string[] | [];
 }
+
+// interface ILoginResponse {
+//   accessToken: string;
+//   user: IUser; 
+// }
 
 export const UserContext = createContext({} as IUserContext);
 
@@ -41,13 +49,14 @@ export const UserProvider = ({ children }: IUserProviderPops) => {
       localStorage.setItem("@TRAVELER:ID", data.user.id);
 
       setUser(data.user);
-
+  
       toast.success("Login realizado com sucesso !");
       setTimeout(() => {
         navigate("/home");
       }, 3000);
+    
     } catch (error) {
-      // console.error(error)
+      console.error(error)
 
       toast.error("E-mail ou senha incorretos, tente novamente !");
     } finally {
@@ -55,7 +64,7 @@ export const UserProvider = ({ children }: IUserProviderPops) => {
     }
   };
 
-  const getUserLog = async () => {
+  const getUserLog = async () => {                
     const token = localStorage.getItem("@TRAVELER:TOKEN");
     const userID = localStorage.getItem("@TRAVELER:ID");
 
@@ -68,25 +77,26 @@ export const UserProvider = ({ children }: IUserProviderPops) => {
       
       setUser(data);
       navigate("/home");
-   
+      // console.log(data)
     } catch (error) {
       console.error(error);
-
+      
       setTimeout(() => {
         localStorage.removeItem("@TRAVELER:TOKEN");
         localStorage.removeItem("@TRAVELER:ID");
       }, 5000);
     }
+    // return data
   };
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem("@TRAVELER:TOKEN");
-  //   const userID = localStorage.getItem("@TRAVELER:ID");
+  useEffect(() => {
+    const token = localStorage.getItem("@TRAVELER:TOKEN");
+    const userID = localStorage.getItem("@TRAVELER:ID");
 
-  //   if (token && userID) {
-  //     getUserLog();
-  //   }
-  // }, []);
+    if (token && userID) {
+      getUserLog();
+    }
+  }, []);
 
   const userLogout = () => {
     localStorage.removeItem("@TRAVELER:TOKEN");

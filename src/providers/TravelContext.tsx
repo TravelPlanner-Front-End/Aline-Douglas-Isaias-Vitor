@@ -1,7 +1,8 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { api } from "../services/api";
 import { toast } from "react-hot-toast";
 import { IRegisterNewValueForm } from "../components/Form/RegisterNewValueForm";
+import { UserContext } from "./UserContext";
 
 interface ITravelProviderProps {
   children: React.ReactNode;
@@ -10,21 +11,36 @@ interface ITravelProviderProps {
 interface ITravelContext {
   addNewValue: (formData: IRegisterNewValueForm) => Promise<void>;
   loadSavings: () => Promise<void>;
-  savings: ISaving[];
+  savings: ISaving;
+}
+
+interface ITravel {
+  local: string;
+  userId: number;
+  id: number;
+  month: string;
+  initialValue: number;
+  accommodation: number;
+  food: number;
+  transport: number;
+  shopping: number;
+  others: number;
 }
 
 interface ISaving {
-  month: string;
-  value: number;
-  userId: number;
-  travelId: number;
+  email: string;
+  password: string;
+  name: string;
   id: number;
+  travel: ITravel[];
 }
 
 export const TravelContext = createContext({} as ITravelContext);
 
 export const TravelProvider = ({ children }: ITravelProviderProps) => {
-  const [savings, setSavings] = useState([]);
+  const [savings, setSavings] = useState<ISaving>({} as ISaving);
+
+  const{ user } = useContext(UserContext);
 
   const tokenLocalStorage = localStorage.getItem("@TRAVELER:TOKEN");
   const idLocalStorage = localStorage.getItem("@TRAVELER:ID");
@@ -57,12 +73,35 @@ export const TravelProvider = ({ children }: ITravelProviderProps) => {
           Authorization: `Bearer ${tokenLocalStorage}`,
         },
       });
-      setSavings(data.savings);
+      setSavings(data);
+      console.log(data)
     } catch (error) {
       console.log(error);
       toast.error("Ops! Algo deu errado.");
     }
   };
+  useEffect(()=>{
+    if(tokenLocalStorage && idLocalStorage){
+      loadSavings()
+    }
+  },[user])
+
+  /** 
+  // const getUserTravel = async () => {
+  //   try {
+  //     const response = await api.get(`travel/${idLocalStorage}`, {
+  //       headers: {
+  //         Authorization: `Bearer ${tokenLocalStorage}`
+  //       }
+  //     })  // *** Caso precisem usar, sintam-se a vontade, caso não podem apagar *** //
+  //     console.log(data)
+  //   } catch (error) {
+  //     console.error(error)
+  //   }
+  //   return response
+  // }
+  // getUserTravel()
+  **/
 
   return (
     <TravelContext.Provider
@@ -77,4 +116,4 @@ export const TravelProvider = ({ children }: ITravelProviderProps) => {
   );
 };
 
-export const useTravelContext = () => useContext(TravelContext);
+// export const useTravelContext = () => useContext(TravelContext);
