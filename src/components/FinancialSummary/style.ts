@@ -18,6 +18,11 @@ p {
     color: var(--grey-0)
 }
 
+@media (min-width: 769px) {
+    width: 25%;
+
+    margin-left: 100px;
+}
 `
 
 

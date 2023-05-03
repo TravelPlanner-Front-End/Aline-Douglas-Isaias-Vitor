@@ -6,8 +6,8 @@ export const HomePage = () => {
   return (
     <>
       <RegisterNewValueForm />
-      <SavingsList/>
-      <FinancialSummary/>
+      <SavingsList />
+      <FinancialSummary />
     </>
   );
 };
