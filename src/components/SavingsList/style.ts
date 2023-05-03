@@ -20,6 +20,8 @@ ul {
 
     display: flex;
     flex-direction: column;
+
+    overflow-y: scroll;
 }
 
 div {
