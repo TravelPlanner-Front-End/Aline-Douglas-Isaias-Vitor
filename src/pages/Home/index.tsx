@@ -18,7 +18,7 @@ export const HomePage = () => {
         </>
       ) : (
         <div>
-          <img src={toggleImg} alt="Dashboard sem planejamento" />
+          <img src={toggleImg} alt="Pessoa no  viajando no avião" />
           <button>Cadastre seu planejamento</button>
         </div>
       )}
