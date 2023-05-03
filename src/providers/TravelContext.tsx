@@ -2,6 +2,7 @@ import { createContext, useContext, useState } from "react";
 import { api } from "../services/api";
 import { toast } from "react-hot-toast";
 import { IRegisterNewValueForm } from "../components/Form/RegisterNewValueForm";
+import { TTravelSchema } from "../schemas/travelSchema";
 
 interface ITravelProviderProps {
   children: React.ReactNode;
@@ -11,6 +12,9 @@ interface ITravelContext {
   addNewValue: (formData: IRegisterNewValueForm) => Promise<void>;
   loadSavings: () => Promise<void>;
   savings: ISaving[];
+  newTravel: (formData: TTravelSchema) => Promise<void>;
+  setIsOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
+  isOpenModal: boolean;
 }
 
 interface ISaving {
@@ -26,8 +30,36 @@ export const TravelContext = createContext({} as ITravelContext);
 export const TravelProvider = ({ children }: ITravelProviderProps) => {
   const [savings, setSavings] = useState([]);
 
+  const [travel, setTravel] = useState([]);
+
+  const [isOpenModal, setIsOpenModal] = useState(false);
+
   const tokenLocalStorage = localStorage.getItem("@TRAVELER:TOKEN");
   const idLocalStorage = localStorage.getItem("@TRAVELER:ID");
+
+  //add nova viagem
+  const newTravel = async (formData: TTravelSchema) => {
+    const body = {
+      ...formData,
+      userId: idLocalStorage,
+    };
+    try {
+      //api teste
+      const { data } = await api.post("travel", body, {
+        headers: {
+          Authorization: `Bearer ${tokenLocalStorage}`,
+        },
+      });
+
+      setTravel(data);
+
+      setIsOpenModal(false);
+
+      console.log("passei na requisição:", data);
+    } catch (error) {
+      console.log("deu erro");
+    }
+  };
 
   // Parte da inclusão das economias do mês e renderização do resumo mensal
   const addNewValue = async (formData: IRegisterNewValueForm) => {
@@ -70,6 +102,9 @@ export const TravelProvider = ({ children }: ITravelProviderProps) => {
         addNewValue,
         loadSavings,
         savings,
+        setIsOpenModal,
+        isOpenModal,
+        newTravel,
       }}
     >
       {children}
