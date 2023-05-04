@@ -3,6 +3,7 @@ import { TLoginSchema } from "../schemas/loginSchema";
 import { api } from "../services/api";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { TRegisterSchema } from "../schemas/registerSchema";
 
 interface IUserProviderPops {
   children: React.ReactNode;
@@ -10,6 +11,7 @@ interface IUserProviderPops {
 
 interface IUserContext {
   userLogin: (loginData: TLoginSchema, setLoading: React.Dispatch<React.SetStateAction<boolean>>) => Promise<void>;
+  registerUser: (registerData:TRegisterSchema) => Promise<void>;
   loading: boolean;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
   user: IUser | null;
@@ -22,7 +24,7 @@ interface IUser {
   password: string;
 }
 
-export const UserContext = createContext({} as IUserContext) 
+export const UserContext = createContext({} as IUserContext)
 
 export const UserProvider = ({ children }: IUserProviderPops) => {
   const navigate = useNavigate();
@@ -38,23 +40,38 @@ export const UserProvider = ({ children }: IUserProviderPops) => {
       const { data } = await api.post("login", loginData);
       localStorage.setItem("@TRAVELER:TOKEN", data.accessToken)
       localStorage.setItem("@TRAVELER:ID", data.user.id)
-      
+
       setUser(data.user)
 
       toast.success("Login realizado com sucesso !")
       setTimeout(() => {
         navigate("/home")
       }, 3000)
-      
+
     } catch (error) {
       // console.error(error)      
-    
+
       toast.error("E-mail ou senha incorretos, tente novamente !")
 
     } finally {
       setLoading(false)
     }
   }
+
+  const registerUser = async (registerData:TRegisterSchema) => {
+
+    try {
+      await api.post("register", registerData);
+      toast("Cadastrado com sucesso!");
+      navigate("/");
+
+    } catch (error) {
+      // console.error(error)   
+
+      toast.error('Cadastro falhou')
+    }
+
+  };
 
   useEffect(() => {
     const token = localStorage.getItem("@TRAVELER:TOKEN")
@@ -69,17 +86,17 @@ export const UserProvider = ({ children }: IUserProviderPops) => {
         });
         setUser(data);
         navigate("/home");
-        
+
       } catch (error) {
         console.error(error);
 
         setTimeout(() => {
           localStorage.removeItem("@TRAVELER:TOKEN")
           localStorage.removeItem("@TRAVELER:ID")
-        }, 5000);      
+        }, 5000);
       }
     }
-    if(token && userID) {
+    if (token && userID) {
       autoLog();
     }
   }, []);
@@ -89,7 +106,7 @@ export const UserProvider = ({ children }: IUserProviderPops) => {
     localStorage.removeItem("@TRAVELER:ID")
 
     toast.success("Você saiu da aplicação, e será redirecionado para fazer login !", {
-      iconTheme:{
+      iconTheme: {
         primary: "#1d46ce",
         secondary: "#ffffff"
       },
@@ -97,11 +114,11 @@ export const UserProvider = ({ children }: IUserProviderPops) => {
 
     setTimeout(() => {
       navigate("/");
-    },3000);
+    }, 3000);
   }
 
   return (
-    <UserContext.Provider value={{ loading, user, setLoading, userLogin, userLogout }}>
+    <UserContext.Provider value={{ loading, user, setLoading, userLogin, registerUser, userLogout }}>
       {children}
     </UserContext.Provider>
   )

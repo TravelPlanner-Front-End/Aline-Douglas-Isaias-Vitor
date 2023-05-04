@@ -7,7 +7,7 @@ export const registerSchema = z
       .string()
       .min(1, "O e-mail é obrigatório")
       .email("Forneça um e-mail válido."),
-      password: z
+    password: z
       .string()
       .min(7, "A senha precisa conter pelo menos 7 caracteres.")
       .regex(/(?=.*?[A-Z])/, "É necessário pelo menos 1 letra maiúscula.")

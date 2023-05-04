@@ -11,7 +11,8 @@ export const HomePage = () => {
     <>
       <Toaster position="bottom-right" reverseOrder={false} />
       <RegisterNewValueForm />
-      <h2>home</h2>
+      <SavingsList />
+      <FinancialSummary />
     </>
   );
 };
