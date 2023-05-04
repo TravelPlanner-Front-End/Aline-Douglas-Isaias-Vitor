@@ -51,10 +51,10 @@ export const FinancialSummary = () => {
           ) : (
             <p>Você já economizou o valor necessário</p>
           )}
-          <p>
+          {/* <p>
             Faltam <span className="totalTripCostAndMonths"></span> meses para a
             viagem
-          </p>
+          </p> */}
         </StyledDiv>
       ) : (
         <StyledDiv>
@@ -70,10 +70,10 @@ export const FinancialSummary = () => {
           <p>
             <span className="missingValue">{`R$ ${{ total }}`}</span>
           </p>
-          <p>
+          {/* <p>
             Faltam <span className="totalTripCostAndMonths"></span> meses para a
             viagem
-          </p>
+          </p> */}
         </StyledDiv>
       )}
     </>

@@ -3,6 +3,7 @@ import { TLoginSchema } from "../schemas/loginSchema";
 import { api } from "../services/api";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { TRegisterSchema } from "../schemas/registerSchema";
 
 interface IUserProviderPops {
   children: React.ReactNode;
@@ -15,6 +16,7 @@ interface IUserContext {
   user: IUser | null;
   userLogout: () => void;
   getUserLog: () => Promise<void>
+  registerUser: (registerData: TRegisterSchema) => Promise<void>
   // setUser: React.Dispatch<React.SetStateAction<IUser | null>>
 }
 
@@ -114,8 +116,19 @@ export const UserProvider = ({ children }: IUserProviderPops) => {
     }, 3000);
   };
 
+  const registerUser = async (registerData:TRegisterSchema) => {
+    try {
+      await api.post("register", registerData);
+      toast.success("Cadastrado com sucesso!");
+      navigate("/");
+    } catch (error) {
+      // console.error(error)  
+      toast.error('Cadastro falhou')
+    }
+  };
+
   return (
-    <UserContext.Provider value={{ loading, user, setLoading, userLogin, userLogout, getUserLog }}>
+    <UserContext.Provider value={{ loading, user, setLoading, userLogin, userLogout, getUserLog, registerUser }}>
       {children}
     </UserContext.Provider>
   );

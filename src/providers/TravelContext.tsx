@@ -26,18 +26,18 @@ interface ITravelContext {
   newTravel: (formData: TTravelSchema) => Promise<void>;
 }
 
-interface ITravel {
-  local: string;
-  userId: number;
-  id: number;
-  month: string;
-  initialValue: number;
-  accommodation: number;
-  food: number;
-  transport: number;
-  shopping: number;
-  others: number;
-}
+// interface ITravel {
+//   local: string;
+//   userId: number;
+//   id: number;
+//   month: string;
+//   initialValue: number;
+//   accommodation: number;
+//   food: number;
+//   transport: number;
+//   shopping: number;
+//   others: number;
+// }
 
 // interface ISaving {
 //   email: string;
@@ -127,7 +127,6 @@ export const TravelProvider = ({ children }: ITravelProviderProps) => {
     }
   };
 
-  // Parte da inclusão das economias do mês e renderização do resumo mensal
   const addNewValue = async (formData: IRegisterNewValueForm) => {
     const body = {
       ...formData,
@@ -141,6 +140,7 @@ export const TravelProvider = ({ children }: ITravelProviderProps) => {
         },
       });
       setSavings([...savings, response.data]);
+      toast.success("Economia do mês cadastrada com sucesso!");
     } catch (error) {
       console.log(error);
       toast.error("Ops! Algo deu errado.");
@@ -148,24 +148,28 @@ export const TravelProvider = ({ children }: ITravelProviderProps) => {
   };
 
   const loadSavings = async () => {
-    try {
-      const { data } = await api.get(
-        `users/${idLocalStorage}?_embed=savings&_embed=travel`,
-        {
-          headers: {
-            Authorization: `Bearer ${tokenLocalStorage}`,
-          },
-        }
-      );
-      console.log(data);
-      setTravel(data.travel[0] || null);
-      setTravelId(data.travel[0].id || null);
-      setSavings(data.savings || []);
-    } catch (error) {
-      console.log(error);
-      toast.error("Ops! Algo deu errado.");
+    if (savings) {
+      try {
+        const { data } = await api.get(
+          `users/${idLocalStorage}?_embed=savings&_embed=travel`,
+          {
+            headers: {
+              Authorization: `Bearer ${tokenLocalStorage}`,
+            },
+          }
+        );
+        setTravel(data.travel[0] || null);
+        setTravelId(data.travel[0].id || null);
+        setSavings(data.savings || []);
+        console.log(data);
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      return;
     }
   };
+
   useEffect(() => {
     if (tokenLocalStorage && idLocalStorage) {
       loadSavings();
