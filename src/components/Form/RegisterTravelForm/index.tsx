@@ -19,16 +19,16 @@ transport: "5"
 
 */
 
-interface IFormTravelRegister {
-  accommodation: string;
-  food: string;
-  initialValue: string;
-  local: string;
-  month_of_travel: string;
-  other_expenses: string;
-  shopping: string;
-  transport: string;
-}
+// interface IFormTravelRegister {
+//   accommodation: string;
+//   food: string;
+//   initialValue: string;
+//   local: string;
+//   month_of_travel: string;
+//   other_expenses: string;
+//   shopping: string;
+//   transport: string;
+// }
 
 export const RegisterTravelForm = () => {
   const [loading, setLoading] = useState(false);
