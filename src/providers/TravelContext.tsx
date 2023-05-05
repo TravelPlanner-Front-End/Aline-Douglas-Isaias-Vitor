@@ -18,7 +18,7 @@ interface ITravelProviderProps {
 
 interface ITravelContext {
   addNewValue: (formData: IRegisterNewValueForm) => Promise<void>;
-  loadSavings: () => Promise<void>;
+  //loadSavings: () => Promise<void>;
   savings: ISaving[];
   travel: ITravel[];
   setIsOpenModal: Dispatch<SetStateAction<boolean>>;
@@ -192,15 +192,17 @@ export const TravelProvider = ({ children }: ITravelProviderProps) => {
       //setTesteDoTravel(data);
       setTravel(data);
       setTravelId(data[0].id);
+      loadSavings(data[0].id);
     } catch (error) {}
   };
   //};
 
-  const loadSavings = async () => {
+  const loadSavings = async (id: number) => {
     //if (true) {
     try {
       ///savings?travelId=5
-      const { data } = await api.get(`/savings?travelId=${travelId}`, {
+      console.log(travelId);
+      const { data } = await api.get(`/savings?travelId=${id}`, {
         headers: {
           Authorization: `Bearer ${tokenLocalStorage}`,
         },
@@ -269,7 +271,7 @@ export const TravelProvider = ({ children }: ITravelProviderProps) => {
   useEffect(() => {
     if (tokenLocalStorage && idLocalStorage) {
       loadTravel();
-      loadSavings();
+      //loadSavings();
       //loadd();
     }
   }, [user]);
@@ -296,7 +298,7 @@ export const TravelProvider = ({ children }: ITravelProviderProps) => {
     <TravelContext.Provider
       value={{
         addNewValue,
-        loadSavings,
+        //loadSavings,
         savings,
         setIsOpenModal,
         isOpenModal,
