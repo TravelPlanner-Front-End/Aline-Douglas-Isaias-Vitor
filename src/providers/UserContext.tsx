@@ -10,13 +10,16 @@ interface IUserProviderPops {
 }
 
 interface IUserContext {
-  userLogin: (loginData: TLoginSchema, setLoading: React.Dispatch<React.SetStateAction<boolean>>) => Promise<void>;
+  userLogin: (
+    loginData: TLoginSchema,
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>
+  ) => Promise<void>;
   loading: boolean;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
   user: IUser | null;
   userLogout: () => void;
-  getUserLog: () => Promise<void>
-  registerUser: (registerData: TRegisterSchema) => Promise<void>
+  getUserLog: () => Promise<void>;
+  registerUser: (registerData: TRegisterSchema) => Promise<void>;
   // setUser: React.Dispatch<React.SetStateAction<IUser | null>>
 }
 
@@ -30,7 +33,7 @@ interface IUser {
 
 // interface ILoginResponse {
 //   accessToken: string;
-//   user: IUser; 
+//   user: IUser;
 // }
 
 export const UserContext = createContext({} as IUserContext);
@@ -42,7 +45,10 @@ export const UserProvider = ({ children }: IUserProviderPops) => {
 
   const [loading, setLoading] = useState(false);
 
-  const userLogin = async (loginData: TLoginSchema, setLoading: React.Dispatch<React.SetStateAction<boolean>>) => {
+  const userLogin = async (
+    loginData: TLoginSchema,
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>
+  ) => {
     try {
       setLoading(true);
 
@@ -51,14 +57,13 @@ export const UserProvider = ({ children }: IUserProviderPops) => {
       localStorage.setItem("@TRAVELER:ID", data.user.id);
 
       setUser(data.user);
-  
+
       toast.success("Login realizado com sucesso !");
       setTimeout(() => {
         navigate("/home");
       }, 3000);
-    
     } catch (error) {
-      console.error(error)
+      console.error(error);
 
       toast.error("E-mail ou senha incorretos, tente novamente !");
     } finally {
@@ -66,7 +71,7 @@ export const UserProvider = ({ children }: IUserProviderPops) => {
     }
   };
 
-  const getUserLog = async () => {                
+  const getUserLog = async () => {
     const token = localStorage.getItem("@TRAVELER:TOKEN");
     const userID = localStorage.getItem("@TRAVELER:ID");
 
@@ -76,13 +81,12 @@ export const UserProvider = ({ children }: IUserProviderPops) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      
+
       setUser(data);
       navigate("/home");
-      // console.log(data)
     } catch (error) {
       console.error(error);
-      
+
       setTimeout(() => {
         localStorage.removeItem("@TRAVELER:TOKEN");
         localStorage.removeItem("@TRAVELER:ID");
@@ -104,31 +108,44 @@ export const UserProvider = ({ children }: IUserProviderPops) => {
     localStorage.removeItem("@TRAVELER:TOKEN");
     localStorage.removeItem("@TRAVELER:ID");
 
-    toast.success("Você saiu da aplicação, e será redirecionado para fazer login !", {
-      iconTheme: {
-        primary: "#1d46ce",
-        secondary: "#ffffff",
-      },
-    });
+    toast.success(
+      "Você saiu da aplicação, e será redirecionado para fazer login !",
+      {
+        iconTheme: {
+          primary: "#1d46ce",
+          secondary: "#ffffff",
+        },
+      }
+    );
 
     setTimeout(() => {
       navigate("/");
     }, 3000);
   };
 
-  const registerUser = async (registerData:TRegisterSchema) => {
+  const registerUser = async (registerData: TRegisterSchema) => {
     try {
       await api.post("register", registerData);
       toast.success("Cadastrado com sucesso!");
       navigate("/");
     } catch (error) {
-      // console.error(error)  
-      toast.error('Cadastro falhou')
+      // console.error(error)
+      toast.error("Cadastro falhou");
     }
   };
 
   return (
-    <UserContext.Provider value={{ loading, user, setLoading, userLogin, userLogout, getUserLog, registerUser }}>
+    <UserContext.Provider
+      value={{
+        loading,
+        user,
+        setLoading,
+        userLogin,
+        userLogout,
+        getUserLog,
+        registerUser,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );

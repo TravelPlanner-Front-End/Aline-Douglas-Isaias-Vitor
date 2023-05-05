@@ -1,5 +1,8 @@
 import { StyledForm } from "./style";
-import { TNewValueSchema, newValueSchema } from "../../../schemas/newValueSchema";
+import {
+  TNewValueSchema,
+  newValueSchema,
+} from "../../../schemas/newValueSchema";
 import Input from "../../../fragments/Input";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -9,7 +12,7 @@ import { TravelContext } from "../../../providers/TravelContext";
 
 export interface IRegisterNewValueForm {
   month: string;
-  value: number;
+  value: number | string;
 }
 
 export const RegisterNewValueForm = () => {

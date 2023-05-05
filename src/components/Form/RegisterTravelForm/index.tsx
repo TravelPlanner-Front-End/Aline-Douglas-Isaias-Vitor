@@ -43,17 +43,13 @@ export const RegisterTravelForm = () => {
   });
 
   const submit: SubmitHandler<TTravelSchema> = (formData) => {
-    //console.log(formData);
     newTravel(formData);
     //setGuardar(travelForm);
     //setTeste("mudei");
 
-    //console.log(travelForm);
     //setLoading(true);
   };
 
-  //console.log(guardar);
-  //console.log("teste:", teste);
   //error={errors.local}
 
   return (

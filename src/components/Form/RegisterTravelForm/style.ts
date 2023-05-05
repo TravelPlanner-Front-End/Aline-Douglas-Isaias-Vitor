@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const StyledFormModalBox = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 40px;
 
   @media (min-width: 768px) {
     .divInputs {
@@ -11,16 +11,25 @@ export const StyledFormModalBox = styled.form`
       gap: 20px;
       justify-content: center;
     }
+  }
 
-    .inputsRight,
-    .inputsLeft {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-      input {
-        width: 250px;
-        height: 48px;
-      }
+  .inputsRight,
+  .inputsLeft {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    input {
+      width: 250px;
+      height: 48px;
+    }
+
+    label {
+      font-family: "Inter";
+      font-style: normal;
+      font-weight: 400;
+      font-size: 0.8rem;
+      line-height: 0px;
+      color: var(--grey-0);
     }
   }
 

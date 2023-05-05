@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 export const SavingsList = () => {
   const { travel, savings } = useTravelContext();
 
-  const initialValue = travel?.initialValue;
+  const initialValue = travel[0].initialValue;
 
   let total = 0;
 
