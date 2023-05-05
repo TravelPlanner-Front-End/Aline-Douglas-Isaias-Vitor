@@ -17,16 +17,22 @@ export const FinancialSummary = () => {
   }
 
   console.log(travel);
+
   let totalSavings = 0;
 
   if (savings && travel) {
     totalSavings = savings.reduce(
-      (accumulator, currentValue) => accumulator + currentValue.value,
-      travel[0].initialValue ? travel[0].initialValue : 0
+      (accumulator, currentValue) => accumulator + Number(currentValue.value),
+      travel[0].initialValue ? Number(travel[0].initialValue) : 0
     );
   }
-
+  console.log(totalSavings);
+  console.log(total);
   const missingValue = total - totalSavings;
+
+  console.log(missingValue);
+  console.log(missingValue >= total);
+  console.log(totalSavings >= total);
 
   // const monthsUntilTheTrip = travel?.month - savings.length
   // {monthsUntilTheTrip}
@@ -44,13 +50,13 @@ export const FinancialSummary = () => {
               })}
             </span>
           </p>
-          {missingValue >= total ? (
+          {totalSavings >= total ? (
+            <p>Você já economizou o valor necessário</p>
+          ) : (
             <p>
-              Valor faltante{" "}
+              Valor faltante
               <span className="missingValue">{missingValue}</span>
             </p>
-          ) : (
-            <p>Você já economizou o valor necessário</p>
           )}
           {/* <p>
             Faltam <span className="totalTripCostAndMonths"></span> meses para a
