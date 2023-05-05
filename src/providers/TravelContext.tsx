@@ -145,12 +145,15 @@ export const TravelProvider = ({ children }: ITravelProviderProps) => {
       userId: idLocalStorage,
       travelId: travelId,
     };
+    console.log("body:", body);
     try {
       const response = await api.post("/savings", body, {
         headers: {
           Authorization: `Bearer ${tokenLocalStorage}`,
         },
       });
+
+      console.log("new:", response);
       setSavings([...savings, response.data]);
       toast.success("Economia do mês cadastrada com sucesso!");
     } catch (error) {
@@ -170,7 +173,7 @@ export const TravelProvider = ({ children }: ITravelProviderProps) => {
         },
       });
 
-      setSalvando(data);
+     
 
       
       
@@ -194,36 +197,40 @@ export const TravelProvider = ({ children }: ITravelProviderProps) => {
   //};
 
   const loadSavings = async () => {
-    if (savings.length > 0) {
-      try {
-        const { data } = await api.get(
-          `users/${idLocalStorage}?_embed=savings&_embed=travel`,
-          {
-            headers: {
-              Authorization: `Bearer ${tokenLocalStorage}`,
-            },
-          }
-        );
-        //obs aparentemente resolveu o problema do id assim
+    //if (true) {
+    try {
+      ///savings?travelId=5
+      const { data } = await api.get(`/savings?travelId=${travelId}`, {
+        headers: {
+          Authorization: `Bearer ${tokenLocalStorage}`,
+        },
+      });
+      //obs aparentemente resolveu o problema do id assim
 
-        //não serve pra verificar se tem viagem
-        //só serve pra ver se tem savings
+      //não serve pra verificar se tem viagem
+      //só serve pra ver se tem savings
+      console.log("loadsavings", data);
+      setSavings(data);
 
-        if (data.travel.length > 0) {
-          //setTravel(data.travel[0]);
-          setTravelId(data.travel[0].id);
-          setSavings(data.savings);
-        } else {
-          //setTravel(null);
-          setTravelId(null);
-          setSavings([]);
-        }
-      } catch (error) {
-        console.error(error);
+      /*
+      console.log("savings", data);
+      if (data.travel.length > 0) {
+        //setTravel(data.travel[0]);
+        //setTravelId(data.travel[0].id);
+        
+      } else {
+        //setTravel(null);
+        //setTravelId(null);
+        setSavings([]);
       }
-    } else {
-      return;
+      */
+    } catch (error) {
+      console.error(error);
     }
+    //}
+    //else {
+    // return;
+    //}
   };
 
   //delete travel
@@ -261,9 +268,9 @@ export const TravelProvider = ({ children }: ITravelProviderProps) => {
 
   useEffect(() => {
     if (tokenLocalStorage && idLocalStorage) {
+      loadTravel();
       loadSavings();
       //loadd();
-      loadTravel();
     }
   }, [user]);
 
