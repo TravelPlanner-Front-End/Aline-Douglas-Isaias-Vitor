@@ -8,20 +8,21 @@ export const FinancialSummary = () => {
 
   if (travel) {
     total =
-      travel?.accommodation +
-      travel?.food +
-      travel?.initialValue +
-      travel?.others +
-      travel?.shopping +
-      travel?.transport;
+      Number(travel[0].accommodation) +
+      Number(travel[0].food) +
+      Number(travel[0].initialValue) +
+      Number(travel[0].other_expenses) +
+      Number(travel[0].shopping) +
+      Number(travel[0].transport);
   }
 
+  console.log(travel);
   let totalSavings = 0;
 
   if (savings && travel) {
     totalSavings = savings.reduce(
       (accumulator, currentValue) => accumulator + currentValue.value,
-      travel.initialValue ? travel?.initialValue : 0
+      travel[0].initialValue ? travel[0].initialValue : 0
     );
   }
 

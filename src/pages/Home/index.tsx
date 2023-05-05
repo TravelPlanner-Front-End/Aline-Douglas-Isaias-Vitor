@@ -6,28 +6,44 @@ import { TravelContext } from "../../providers/TravelContext";
 import toggleImg from "../../assets/vector-dashboard-vazio 1.svg";
 import { FinancialSummary } from "../../components/FinancialSummary";
 import { ModalTravel } from "../../components/ModalTravel";
+import { StyledMainBox } from "./style";
 
 export const HomePage = () => {
   const { setIsOpenModal, isOpenModal, travel } = useContext(TravelContext);
 
   return (
     <>
-      <Header />
-      {isOpenModal == true ? <ModalTravel /> : null}
-      {travel ? (
-        <>
-          <RegisterNewValueForm />
-          <SavingsList />
-          <FinancialSummary />
-        </>
-      ) : (
-        <div>
-          <img src={toggleImg} alt="Pessoa no  viajando no avião" />
-          <button onClick={() => setIsOpenModal(true)}>
-            Cadastre seu planejamento
-          </button>
-        </div>
-      )}
+      <StyledMainBox>
+        {isOpenModal == true ? <ModalTravel /> : null}
+        <Header />
+        {travel.length > 0 ? (
+          <>
+            <RegisterNewValueForm />
+            <SavingsList />
+            <FinancialSummary />
+          </>
+        ) : (
+          <section className="sectionEmptyHome">
+            <div className="container">
+              <div className="divImgHome">
+                <figure>
+                  <img src={toggleImg} alt="Pessoa no viajando no avião" />
+                </figure>
+              </div>
+              {/** <img src={toggleImg} alt="Pessoa no  viajando no avião" /> */}
+
+              <div className="divButtonAddTravel">
+                <button
+                  className="buttonAddTravel"
+                  onClick={() => setIsOpenModal(true)}
+                >
+                  Cadastre seu planejamento
+                </button>
+              </div>
+            </div>
+          </section>
+        )}
+      </StyledMainBox>
     </>
   );
 };

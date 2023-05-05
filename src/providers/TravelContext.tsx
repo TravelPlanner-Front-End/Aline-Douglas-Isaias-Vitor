@@ -20,10 +20,13 @@ interface ITravelContext {
   addNewValue: (formData: IRegisterNewValueForm) => Promise<void>;
   loadSavings: () => Promise<void>;
   savings: ISaving[];
-  travel: ITravel | null;
+  travel: ITravel[];
   setIsOpenModal: Dispatch<SetStateAction<boolean>>;
   isOpenModal: boolean;
   newTravel: (formData: TTravelSchema) => Promise<void>;
+  deleteTravel: () => Promise<void>;
+  deleteSavings: (id: number) => Promise<void>;
+  setSavings: Dispatch<SetStateAction<ISaving[]>>;
 }
 
 // interface ITravel {
@@ -70,18 +73,18 @@ export interface ISaving {
 // }
 
 interface ITravel {
-  accommodation: number;
-  food: number;
-  id: number;
+  accommodation: number | string;
+  food: number | string;
+  id: number | string;
   initialValue: number;
   local: string;
-  month: string;
-  others: number;
-  shopping: number;
-  tours: number;
-  transport: number;
-  userId: number;
-  travel: ISaving[];
+  month_of_travel: number | string;
+  other_expenses: number | string;
+  shopping: number | string;
+  tours: number | string;
+  transport: number | string;
+  userId: number | string;
+  //travel: ISaving[];
 }
 
 export const TravelContext = createContext({} as ITravelContext);
@@ -92,8 +95,16 @@ export const TravelProvider = ({ children }: ITravelProviderProps) => {
   const { user } = useContext(UserContext);
 
   const [savings, setSavings] = useState<ISaving[]>([]);
-  const [travel, setTravel] = useState(null);
+
+  const [travel, setTravel] = useState<ITravel[]>([]);
+  //o registro sava a viagem aqui
+  const [travelSave, setTravelSave] = useState([]);
+
+  //meu teste pra salvar
+  const [salvando, setSalvando] = useState([]);
   const [travelId, setTravelId] = useState(null);
+
+  //const [testeDoTravel, setTesteDoTravel] = useState([]);
 
   //const [travel, setTravel] = useState([]);
 
@@ -117,11 +128,12 @@ export const TravelProvider = ({ children }: ITravelProviderProps) => {
       });
 
       //setTravel(data);
-      loadSavings();
+      //loadSavings();
+      setTravelSave(data);
 
       setIsOpenModal(false);
-
-      console.log("passei na requisição:", data);
+      setTravel([data]);
+      setTravelId(data.id);
     } catch (error) {
       console.log("deu erro");
     }
@@ -147,8 +159,42 @@ export const TravelProvider = ({ children }: ITravelProviderProps) => {
     }
   };
 
+  //meu teste
+
+  /*
+  const loadd = async () => {
+    try {
+      const { data } = await api.get("/savings?travelId=5", {
+        headers: {
+          Authorization: `Bearer ${tokenLocalStorage}`,
+        },
+      });
+
+      setSalvando(data);
+
+      
+      
+    } catch (error) {}
+  };
+*/
+  const loadTravel = async () => {
+    //if (travel.length > 0) {
+    try {
+      const { data } = await api.get(`/travel?userId=${idLocalStorage}`, {
+        headers: {
+          Authorization: `Bearer ${tokenLocalStorage}`,
+        },
+      });
+
+      //setTesteDoTravel(data);
+      setTravel(data);
+      setTravelId(data[0].id);
+    } catch (error) {}
+  };
+  //};
+
   const loadSavings = async () => {
-    if (savings) {
+    if (savings.length > 0) {
       try {
         const { data } = await api.get(
           `users/${idLocalStorage}?_embed=savings&_embed=travel`,
@@ -158,10 +204,20 @@ export const TravelProvider = ({ children }: ITravelProviderProps) => {
             },
           }
         );
-        setTravel(data.travel[0] || null);
-        setTravelId(data.travel[0].id || null);
-        setSavings(data.savings || []);
-        console.log(data);
+        //obs aparentemente resolveu o problema do id assim
+
+        //não serve pra verificar se tem viagem
+        //só serve pra ver se tem savings
+
+        if (data.travel.length > 0) {
+          //setTravel(data.travel[0]);
+          setTravelId(data.travel[0].id);
+          setSavings(data.savings);
+        } else {
+          //setTravel(null);
+          setTravelId(null);
+          setSavings([]);
+        }
       } catch (error) {
         console.error(error);
       }
@@ -170,9 +226,44 @@ export const TravelProvider = ({ children }: ITravelProviderProps) => {
     }
   };
 
+  //delete travel
+
+  const deleteTravel = async () => {
+    ///setTravel([]);
+
+    try {
+      const { data } = await api.delete(`/travel/${travelId}`, {
+        headers: {
+          Authorization: `Bearer ${tokenLocalStorage}`,
+        },
+      });
+
+      setTravelId(null);
+      setTravel([]);
+
+      toast.success("Viagem deletada");
+    } catch (error) {
+      toast.error("ops, ocorreu algum erro");
+    }
+  };
+
+  const deleteSavings = async (id: number) => {
+    try {
+      const { data } = await api.delete(`/savings/${id}`, {
+        headers: {
+          Authorization: `Bearer ${tokenLocalStorage}`,
+        },
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     if (tokenLocalStorage && idLocalStorage) {
       loadSavings();
+      //loadd();
+      loadTravel();
     }
   }, [user]);
 
@@ -184,7 +275,8 @@ export const TravelProvider = ({ children }: ITravelProviderProps) => {
   //         Authorization: `Bearer ${tokenLocalStorage}`
   //       }
   //     })  // *** Caso precisem usar, sintam-se a vontade, caso não podem apagar *** //
-  //     console.log(data)
+  //    
+  
   //   } catch (error) {
   //     console.error(error)
   //   }
@@ -203,6 +295,9 @@ export const TravelProvider = ({ children }: ITravelProviderProps) => {
         isOpenModal,
         newTravel,
         travel,
+        deleteTravel,
+        deleteSavings,
+        setSavings,
       }}
     >
       {children}
