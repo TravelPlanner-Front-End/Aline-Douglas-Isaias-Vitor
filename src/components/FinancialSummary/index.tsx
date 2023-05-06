@@ -31,30 +31,38 @@ export const FinancialSummary = () => {
       {savings ? (
         <StyledDiv>
           <p>
-            Custo total da viagem: R$ {" "}
+            Custo total da viagem: R$
             <span className="totalTripCostAndMonths">
-              {total}
+              {total.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
             </span>
           </p>
           {totalSavings >= total ? (
             <p>Você já economizou o valor necessário</p>
           ) : (
             <p>
-              Valor restante: R$ 
-              <span className="missingValue"> {missingValue}</span>
+              Valor restante: R$
+              <span className="missingValue">
+                {" "}
+                {missingValue.toLocaleString("pt-BR", {
+                  minimumFractionDigits: 2,
+                })}
+              </span>
             </p>
           )}
         </StyledDiv>
       ) : (
         <StyledDiv>
           <p>
-            Custo total da viagem{" "}
+            Custo total da viagem
             <span className="totalTripCostAndMonths">
-              {total}
+              {total.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
             </span>
           </p>
           <p>
-            <span className="missingValue">{`R$ ${{ total }},00`}</span>
+            {/**<span className="missingValue">{`R$ ${{ total }},00`}</span> */}
+            <span className="missingValue">
+              {total.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+            </span>
           </p>
         </StyledDiv>
       )}
