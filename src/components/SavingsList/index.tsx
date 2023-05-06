@@ -16,7 +16,7 @@ export const SavingsList = () => {
       initialValue ? Number(initialValue) : 0
     );
   }
-  console.log(total, "total");
+
   return (
     <StyledSavings>
       <ul>
