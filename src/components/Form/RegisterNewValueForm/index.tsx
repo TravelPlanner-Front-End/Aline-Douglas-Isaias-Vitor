@@ -5,12 +5,11 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useContext } from "react";
 import { TravelContext } from "../../../providers/TravelContext";
-// import { useTravelContext } from "../../../providers/TravelContext";
 
-// export interface IRegisterNewValueForm {
-//   month: string;
-//   value: number;
-// }
+export interface IRegisterNewValueForm {
+  month: string;
+  value: number | string;
+}
 
 export const RegisterNewValueForm = () => {
   const { addNewValue } = useContext(TravelContext);

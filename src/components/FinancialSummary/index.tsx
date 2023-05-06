@@ -8,71 +8,55 @@ export const FinancialSummary = () => {
 
   if (travel) {
     total =
-      travel?.accommodation +
-      travel?.food +
-      travel?.initialValue +
-      travel?.others +
-      travel?.shopping +
-      travel?.transport;
+      Number(travel[0].accommodation) +
+      Number(travel[0].food) +
+      Number(travel[0].initialValue) +
+      Number(travel[0].other_expenses) +
+      Number(travel[0].shopping) +
+      Number(travel[0].transport);
   }
 
   let totalSavings = 0;
 
   if (savings && travel) {
     totalSavings = savings.reduce(
-      (accumulator, currentValue) => accumulator + currentValue.value,
-      travel.initialValue ? travel?.initialValue : 0
+      (accumulator, currentValue) => accumulator + Number(currentValue.value.toLocaleString("pt-br", 
+      { minimumFractionDigits: 2 })),
+      travel[0].initialValue ? Number(travel[0].initialValue) : 0
     );
   }
-
   const missingValue = total - totalSavings;
-
-  // const monthsUntilTheTrip = travel?.month - savings.length
-  // {monthsUntilTheTrip}
 
   return (
     <>
       {savings ? (
         <StyledDiv>
           <p>
-            Custo total da viagem{" "}
+            Custo total da viagem: R$ {" "}
             <span className="totalTripCostAndMonths">
-              {total.toLocaleString("pt-br", {
-                style: "currency",
-                currency: "BRL",
-              })}
+              {total.toLocaleString("pt-br", { minimumFractionDigits: 2 })}
             </span>
           </p>
-          {missingValue >= total ? (
-            <p>
-              Valor faltante{" "}
-              <span className="missingValue">{missingValue}</span>
-            </p>
-          ) : (
+          {totalSavings >= total ? (
             <p>Você já economizou o valor necessário</p>
+          ) : (
+            <p>
+              Valor faltante: R$ 
+              <span className="missingValue"> {missingValue.toLocaleString("pt-br",
+              { minimumFractionDigits: 2 })}</span>
+            </p>
           )}
-          <p>
-            Faltam <span className="totalTripCostAndMonths"></span> meses para a
-            viagem
-          </p>
         </StyledDiv>
       ) : (
         <StyledDiv>
           <p>
             Custo total da viagem{" "}
             <span className="totalTripCostAndMonths">
-              {total.toLocaleString("pt-br", {
-                style: "currency",
-                currency: "BRL",
-              })}
+              {total.toLocaleString("pt-br", { minimumFractionDigits: 2 })}
             </span>
           </p>
           <p>
-            <span className="missingValue">{`R$ ${{ total }}`}</span>
-          </p>
-          <p>
-            Faltam <span className="totalTripCostAndMonths"></span> meses para a
-            viagem
+            <span className="missingValue">{`R$ ${{ total }},00`}</span>
           </p>
         </StyledDiv>
       )}

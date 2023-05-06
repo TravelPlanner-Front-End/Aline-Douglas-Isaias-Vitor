@@ -3,12 +3,9 @@ import styled from "styled-components";
 export const StyledCartModalBox = styled.div`
   display: flex;
   align-items: center;
-
   justify-content: center;
-
   width: 100%;
   height: 100vh;
-
   background: rgba(51, 51, 51, 0.5);
   z-index: 1001;
 
@@ -16,7 +13,7 @@ export const StyledCartModalBox = styled.div`
     padding: 1rem;
     background-color: var(--grey-3);
     width: 300px;
-    overflow-y: scroll;
+    overflow-y: auto;
     justify-content: center;
     align-items: center;
     box-shadow: 0px 4px 40px -10px rgba(0, 0, 0, 0.25);
@@ -25,8 +22,8 @@ export const StyledCartModalBox = styled.div`
 
     @media (min-width: 768px) {
       background-color: var(--grey-3);
-      width: 600px;
-      height: 600px;
+      width: 650px;
+      height: 650px;
     }
     .divCloseModal {
       display: flex;
@@ -37,7 +34,7 @@ export const StyledCartModalBox = styled.div`
         font-family: "Inter";
         font-style: normal;
         font-weight: 300;
-        font-size: 16px;
+        font-size: 1rem;
         line-height: 0px;
         background-color: transparent;
         color: #a3a3a3;
