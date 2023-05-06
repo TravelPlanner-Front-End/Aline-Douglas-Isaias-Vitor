@@ -13,14 +13,15 @@ export const StyledHomeSection = styled.section `
 
   @media(min-width: 769px) {
     flex-direction: row;
-    justify-content: space-around;
-    margin-top: 5rem;
+    justify-content: space-between;
+    margin: 3rem auto;
+    max-width: 1200px;
 
     .travelContainer {
       display: flex;
       flex-direction: column;
     }
-  } 
+  }    
 `
 
 

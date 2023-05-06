@@ -51,7 +51,7 @@ export const StyledNotFound = styled.section `
     }
 
     a {
-      font-size: 1.5rem;
+      font-size: 1.4rem;
       padding: 0.5rem 2rem;
     }
   }

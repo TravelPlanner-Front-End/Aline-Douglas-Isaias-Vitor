@@ -15,7 +15,7 @@ export const StyledHeaderBox = styled.header`
     box-shadow: 0px 4px 40px -10px rgba(0, 0, 0, 0.25);
     border-radius: 10px;
     padding: 1rem;
-    position: relative;
+    position: relative; 
 
     .divUser h1 {
       font-family: "Inter";
@@ -33,6 +33,7 @@ export const StyledHeaderBox = styled.header`
       line-height: 1.5rem;
       color: var(--color-primary);
     }
+    
     @media (min-width: 768px) {
       height: 70px;
     }
@@ -40,6 +41,7 @@ export const StyledHeaderBox = styled.header`
     .divButtons {
       display: flex;
       gap: 20px;
+    
       .buttonDelete,
       .buttonLogout {
         display: none;
@@ -48,10 +50,13 @@ export const StyledHeaderBox = styled.header`
       .iconHamburguer {
         color: var(--grey-1);
       }
+
+      
       @media (min-width: 768px) {
         .iconHamburguer {
           display: none;
         }
+        
         .buttonDelete {
           display: block;
           width: 200px;

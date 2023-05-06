@@ -9,7 +9,7 @@ export const SavingsCard = ({ saving }: ISavingCardsProps) => {
   return (
     <StyledLi>
       <h3>
-        Em {saving.month} economizei: <span>R$ {`${saving.value.toLocaleString("pt-br", { minimumFractionDigits: 2 })}`}</span>
+        Em {saving.month} economizei: <span>R$ {`${saving.value}`}</span>
       </h3>
     </StyledLi>
   );

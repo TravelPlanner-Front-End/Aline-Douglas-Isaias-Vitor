@@ -20,8 +20,7 @@ export const FinancialSummary = () => {
 
   if (savings && travel) {
     totalSavings = savings.reduce(
-      (accumulator, currentValue) => accumulator + Number(currentValue.value.toLocaleString("pt-br", 
-      { minimumFractionDigits: 2 })),
+      (accumulator, currentValue) => accumulator + Number(currentValue.value),
       travel[0].initialValue ? Number(travel[0].initialValue) : 0
     );
   }
@@ -34,16 +33,15 @@ export const FinancialSummary = () => {
           <p>
             Custo total da viagem: R$ {" "}
             <span className="totalTripCostAndMonths">
-              {total.toLocaleString("pt-br", { minimumFractionDigits: 2 })}
+              {total}
             </span>
           </p>
           {totalSavings >= total ? (
             <p>Você já economizou o valor necessário</p>
           ) : (
             <p>
-              Valor faltante: R$ 
-              <span className="missingValue"> {missingValue.toLocaleString("pt-br",
-              { minimumFractionDigits: 2 })}</span>
+              Valor restante: R$ 
+              <span className="missingValue"> {missingValue}</span>
             </p>
           )}
         </StyledDiv>
@@ -52,7 +50,7 @@ export const FinancialSummary = () => {
           <p>
             Custo total da viagem{" "}
             <span className="totalTripCostAndMonths">
-              {total.toLocaleString("pt-br", { minimumFractionDigits: 2 })}
+              {total}
             </span>
           </p>
           <p>

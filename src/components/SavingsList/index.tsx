@@ -16,7 +16,7 @@ export const SavingsList = () => {
       initialValue ? Number(initialValue) : 0
     );
   }
-
+console.log(total, "total")
   return (
     <StyledSavings>
       <ul>
@@ -28,7 +28,7 @@ export const SavingsList = () => {
       </ul>
       {savings ? (
         <div>
-          <p>Total economizado: {`R$ ${total.toLocaleString("pt-br", { minimumFractionDigits: 2 })}`}</p>
+          <p>Total economizado: {`R$ ${ total }`}</p>
         </div>
       ) : (
         <p>Cadastre sua primeira econimia</p>

@@ -48,10 +48,9 @@ export const StyledSavings = styled.div`
   }
 
   @media (min-width: 769px) {
-    width: 545px;
+    width: 500px;
     height: 541px;
-
-    margin: 0;
+    margin: 0 1rem 0;
 
     ul {
       height: 500px;

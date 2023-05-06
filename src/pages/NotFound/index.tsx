@@ -8,10 +8,10 @@ export const NotFound = () => {
       <div>
         <img src={astronautAndCat} alt="Astronauta e gato espacial" />
       </div>
-
       <h1>404</h1>
       <h2>Viajante fora da rota...</h2>
-      <Link to= "/">Login</Link>
+      <Link to= "/">Voltar para rota</Link>
     </StyledNotFound>
   );
 };
+

@@ -6,7 +6,7 @@ import { TravelContext } from "../../providers/TravelContext";
 import toggleImg from "../../assets/vector-dashboard-vazio 1.svg";
 import { FinancialSummary } from "../../components/FinancialSummary";
 import { ModalTravel } from "../../components/ModalTravel";
-import { StyledMainBox } from "./styleVoidHome";
+import { StyledMainBox } from "./emptyHome";
 import { StyledHomeSection } from "./style";
 
 export const HomePage = () => {
