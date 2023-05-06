@@ -1,39 +1,37 @@
 import styled from "styled-components";
 
-export const StyledForm = styled.form`
+export const StyledForm = styled.form `
+ 
+  margin: 1rem;
 
-    margin: 16px;
+  padding: 1rem;
 
-    padding: 16px;
+  border-radius: var(--radius-form);
+  box-shadow: var(--shadow);
 
-    border-radius: 10px;
-    box-shadow: 0px 4px 40px -10px rgba(0, 0, 0, 0.25);
+  background-color: var(--grey-3);
 
-    background-color: var(--grey-3);
-
-button {
+  button {
     width: 100%;
     height: 48px;
 
-    margin-top: 16px;
+    margin-top: 1rem;
 
     border: none;
-    border-radius: 100px;
+    border-radius: var(--radius-default);
 
     background-color: var(--color-primary);
 
     font-style: normal;
     font-weight: 500;
-    font-size: 16px;
-    line-height: 26px;
+    font-size: 1rem;
+    line-height: 1.625rem;
     color: var(--grey-4);
-}
+  }
 
-@media (min-width: 769px) {
-    width: 25%;
-
-    margin-top: 185px;
-    margin-left: 100px;
-}
-
+  @media (min-width: 769px) {
+    width: 350px;
+    height: 340px;
+    margin: 0 1rem 1rem;
+  }
 `

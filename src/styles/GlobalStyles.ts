@@ -23,8 +23,17 @@ export const GlobalStyles = createGlobalStyle`
     font-family: var(--font-default);
   }
 
-  button a {
+  button, a {
     cursor: pointer;
   }
 
+  button:hover {
+    background-color: var(--color-primary-Disable);
+    transition: 1.2s ease;
+  }
+
+  a:hover {
+    background-color: var(--grey-2);
+    transition: 1.5s ease; 
+  }
 ` 

@@ -2,10 +2,7 @@ import { useContext, useState } from "react";
 import { UserContext } from "../../providers/UserContext";
 import { TravelContext } from "../../providers/TravelContext";
 import { StyledHeaderBox } from "./style";
-
 import { FaAlignRight } from "react-icons/fa";
-
-//FaAlignRight
 
 export const Header = () => {
   const { user, userLogout } = useContext(UserContext);
@@ -85,24 +82,3 @@ export const Header = () => {
   );
 };
 
-/*
-StyledCartModalBox
-
- {travel ? (
-        <header>
-          <h1>
-            Olá, <span>{user?.name}</span>
-          </h1>
-          <button>Excluir planejamento</button>
-          <button onClick={() => userLogout()}>Sair</button>
-        </header>
-      ) : (
-        <header>
-          <h1>
-            Olá, <span>{user?.name}</span>
-          </h1>
-          <button onClick={() => userLogout()}>Sair</button>
-        </header>
-      )}
-
-*/

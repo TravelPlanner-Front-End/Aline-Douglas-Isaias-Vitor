@@ -20,7 +20,6 @@ interface IUserContext {
   userLogout: () => void;
   getUserLog: () => Promise<void>;
   registerUser: (registerData: TRegisterSchema) => Promise<void>;
-  // setUser: React.Dispatch<React.SetStateAction<IUser | null>>
 }
 
 interface IUser {
@@ -28,13 +27,7 @@ interface IUser {
   email: string;
   name: string;
   password: string;
-  // travel?: string[] | [];
 }
-
-// interface ILoginResponse {
-//   accessToken: string;
-//   user: IUser;
-// }
 
 export const UserContext = createContext({} as IUserContext);
 
@@ -59,9 +52,11 @@ export const UserProvider = ({ children }: IUserProviderPops) => {
       setUser(data.user);
 
       toast.success("Login realizado com sucesso !");
+    
       setTimeout(() => {
         navigate("/home");
       }, 3000);
+    
     } catch (error) {
       console.error(error);
 
@@ -92,7 +87,6 @@ export const UserProvider = ({ children }: IUserProviderPops) => {
         localStorage.removeItem("@TRAVELER:ID");
       }, 5000);
     }
-    // return data
   };
 
   useEffect(() => {
@@ -128,13 +122,14 @@ export const UserProvider = ({ children }: IUserProviderPops) => {
       await api.post("register", registerData);
       toast.success("Cadastrado com sucesso!");
       navigate("/");
+    
     } catch (error) {
-      // console.error(error)
       toast.error("Cadastro falhou");
     }
   };
 
   return (
+     
     <UserContext.Provider
       value={{
         loading,

@@ -1,5 +1,5 @@
 import { useTravelContext } from "../../providers/TravelContext";
-import { StyledDiv } from "./style";
+import { StyledSavings } from "./style";
 import { SavingsCard } from "./SavingCard";
 import { v4 as uuidv4 } from "uuid";
 
@@ -16,9 +16,9 @@ export const SavingsList = () => {
       initialValue ? Number(initialValue) : 0
     );
   }
-
+console.log(total, "total")
   return (
-    <StyledDiv>
+    <StyledSavings>
       <ul>
         {savings
           ? savings.map((saving) => (
@@ -28,11 +28,11 @@ export const SavingsList = () => {
       </ul>
       {savings ? (
         <div>
-          <p>Total economizado: {`R$ ${total}`}</p>
+          <p>Total economizado: {`R$ ${ total }`}</p>
         </div>
       ) : (
         <p>Cadastre sua primeira econimia</p>
       )}
-    </StyledDiv>
+    </StyledSavings>
   );
 };

@@ -1,28 +1,26 @@
 import styled from "styled-components";
 
 export const StyledDiv = styled.div`
+  
+  margin: 1rem;
 
-margin: 16px;
+  padding: 1rem;
 
-padding: 16px;
+  border-radius: var(--radius-form);
+  box-shadow: var(--shadow);
 
-border-radius: 10px;
-box-shadow: 0px 4px 40px -10px rgba(0, 0, 0, 0.25);
+  background-color: var(--grey-3);
 
-background-color: var(--grey-3);
-
-p {
+  p {
     font-weight: 700;
-    font-size: 14px;
-    line-height: 40px;
-    color: var(--grey-0)
-}
+    font-size: 0.875rem;
+    line-height: 2.5rem;
+    color: var(--grey-0);
+  }
 
-@media (min-width: 769px) {
-    width: 25%;
-
-    margin-left: 100px;
-}
-`
-
-
+  @media (min-width: 769px) {
+    margin: 1.8rem 1rem 0;
+    height: 156px;
+    margin-bottom: 0;
+  }
+`;

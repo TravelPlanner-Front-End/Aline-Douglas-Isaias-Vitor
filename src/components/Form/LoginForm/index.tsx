@@ -6,6 +6,7 @@ import { TLoginSchema, loginSchema } from "../../../schemas/loginSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useContext } from "react";
 import logo from "../../../assets/Group 202.svg"
+import { StyledLoginForm } from "./style";
 
 const LoginForm = () => {
   const { loading, setLoading, userLogin } = useContext(UserContext);
@@ -19,7 +20,7 @@ const LoginForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(submitLogin)}>
+    <StyledLoginForm onSubmit={handleSubmit(submitLogin)}>
       <img src={logo} alt="Travel planner" />
       <h1>Login</h1>
       <Input
@@ -43,8 +44,9 @@ const LoginForm = () => {
       />
       
       <button type="submit">{loading ? "Entrando..." : "Entrar"}</button>
-      <Link to="/pagina de cardastro">Cadastre-se</Link>//** COLOCAR AQUI ENDEREÇO DA PÁGINA **//
-    </form>
+      <span>Ainda não possui uma conta?</span>
+      <Link to="/register">Cadastre-se</Link>
+    </StyledLoginForm>
   );
 };
 

@@ -6,42 +6,42 @@ import { TravelContext } from "../../providers/TravelContext";
 import toggleImg from "../../assets/vector-dashboard-vazio 1.svg";
 import { FinancialSummary } from "../../components/FinancialSummary";
 import { ModalTravel } from "../../components/ModalTravel";
-import { StyledMainBox } from "./style";
+import { StyledMainBox } from "./emptyHome";
+import { StyledHomeSection } from "./style";
 
 export const HomePage = () => {
   const { setIsOpenModal, isOpenModal, travel } = useContext(TravelContext);
 
   return (
     <>
+      {isOpenModal == true ? <ModalTravel /> : null}
+      <Header />
       <StyledMainBox>
-        {isOpenModal == true ? <ModalTravel /> : null}
-        <Header />
         {travel.length > 0 ? (
           <>
-            <RegisterNewValueForm />
-            <SavingsList />
-            <FinancialSummary />
+            <StyledHomeSection>
+              <div className="travelContainer">
+                <RegisterNewValueForm />
+                <FinancialSummary />
+              </div>
+              <SavingsList />
+            </StyledHomeSection>
           </>
         ) : (
-          <section className="sectionEmptyHome">
+          <StyledMainBox className="sectionEmptyHome">
             <div className="container">
               <div className="divImgHome">
                 <figure>
                   <img src={toggleImg} alt="Pessoa no viajando no avião" />
                 </figure>
               </div>
-              {/** <img src={toggleImg} alt="Pessoa no  viajando no avião" /> */}
-
               <div className="divButtonAddTravel">
-                <button
-                  className="buttonAddTravel"
-                  onClick={() => setIsOpenModal(true)}
-                >
+                <button className="buttonAddTravel" onClick={() => setIsOpenModal(true)}>
                   Cadastre seu planejamento
                 </button>
               </div>
             </div>
-          </section>
+          </StyledMainBox>
         )}
       </StyledMainBox>
     </>
