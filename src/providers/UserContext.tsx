@@ -51,22 +51,22 @@ export const UserProvider = ({ children }: IUserProviderPops) => {
       localStorage.setItem("@TRAVELER:ID", data.user.id);
 
       setUser(data.user);
-  
-      toast.success("Login realizado com sucesso !");
+
+      toast.success("Login realizado com sucesso!");
       setTimeout(() => {
         navigate("/home");
       }, 3000);
-    
+
     } catch (error) {
       console.error(error)
 
-      toast.error("E-mail ou senha incorretos, tente novamente !");
+      toast.error("E-mail ou senha incorretos, tente novamente!");
     } finally {
       setLoading(false);
     }
   };
 
-  const getUserLog = async () => {                
+  const getUserLog = async () => {
     const token = localStorage.getItem("@TRAVELER:TOKEN");
     const userID = localStorage.getItem("@TRAVELER:ID");
 
@@ -76,19 +76,18 @@ export const UserProvider = ({ children }: IUserProviderPops) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      
+
       setUser(data);
       navigate("/home");
-      // console.log(data)
+
     } catch (error) {
       console.error(error);
-      
+
       setTimeout(() => {
         localStorage.removeItem("@TRAVELER:TOKEN");
         localStorage.removeItem("@TRAVELER:ID");
       }, 5000);
     }
-    // return data
   };
 
   useEffect(() => {
@@ -116,13 +115,12 @@ export const UserProvider = ({ children }: IUserProviderPops) => {
     }, 3000);
   };
 
-  const registerUser = async (registerData:TRegisterSchema) => {
+  const registerUser = async (registerData: TRegisterSchema) => {
     try {
       await api.post("register", registerData);
       toast.success("Cadastrado com sucesso!");
       navigate("/");
     } catch (error) {
-      // console.error(error)  
       toast.error('Cadastro falhou')
     }
   };

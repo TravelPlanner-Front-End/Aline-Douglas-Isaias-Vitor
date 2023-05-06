@@ -43,7 +43,7 @@ const LoginForm = () => {
       />
       
       <button type="submit">{loading ? "Entrando..." : "Entrar"}</button>
-      <Link to="/pagina de cardastro">Cadastre-se</Link>//** COLOCAR AQUI ENDEREÇO DA PÁGINA **//
+      <Link to="/register">Cadastre-se</Link>
     </form>
   );
 };
