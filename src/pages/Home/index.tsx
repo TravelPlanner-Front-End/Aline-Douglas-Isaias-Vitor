@@ -6,20 +6,23 @@ import { TravelContext } from "../../providers/TravelContext";
 import toggleImg from "../../assets/vector-dashboard-vazio 1.svg";
 import { FinancialSummary } from "../../components/FinancialSummary";
 import { ModalTravel } from "../../components/ModalTravel";
+import { StyledHomeSection } from "./style";
 
 export const HomePage = () => {
   const { setIsOpenModal, isOpenModal, travel } = useContext(TravelContext);
-
+  console.log(travel)
   return (
     <>
       <Header />
       {isOpenModal == true ? <ModalTravel /> : null}
       {travel ? (
-        <>
-          <RegisterNewValueForm />
+        <StyledHomeSection>
+          <div className="travelContainer">
+            <RegisterNewValueForm />
+            <FinancialSummary />
+          </div>
           <SavingsList />
-          <FinancialSummary />
-        </>
+        </StyledHomeSection>
       ) : (
         <div>
           <img src={toggleImg} alt="Pessoa no  viajando no avião" />

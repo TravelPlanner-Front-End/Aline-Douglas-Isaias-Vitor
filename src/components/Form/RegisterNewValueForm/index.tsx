@@ -7,19 +7,15 @@ import { useContext } from "react";
 import { TravelContext } from "../../../providers/TravelContext";
 // import { useTravelContext } from "../../../providers/TravelContext";
 
-export interface IRegisterNewValueForm {
-  month: string;
-  value: number;
-}
+// export interface IRegisterNewValueForm {
+//   month: string;
+//   value: number;
+// }
 
 export const RegisterNewValueForm = () => {
   const { addNewValue } = useContext(TravelContext);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm<TNewValueSchema>({
+  const { register, handleSubmit, formState: { errors, isSubmitting }} = useForm<TNewValueSchema>({
     resolver: zodResolver(newValueSchema),
   });
 

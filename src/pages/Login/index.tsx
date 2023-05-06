@@ -1,15 +1,16 @@
 import image from "../../assets/Vectors.svg";
 import LoginForm from "../../components/Form/LoginForm";
+import { StyledLoginPage } from "./style";
 
 export const LoginPage = () => {
 
   return (
-    <section>
+    <StyledLoginPage>
       <LoginForm />
       <div>
         <img src={image} alt="Viajantes de malas prontas" />
       </div>
-    </section>
+    </StyledLoginPage>
   );
 };
 

@@ -1,11 +1,9 @@
 import styled from "styled-components";
 
 export const StyledCartModalBox = styled.div`
-  position: fixed;
   display: flex;
   align-items: center;
 
-  //só aqui
   justify-content: center;
 
   width: 100%;

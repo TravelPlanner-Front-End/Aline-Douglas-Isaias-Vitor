@@ -1,26 +1,20 @@
-import {
-  createContext,
-  Dispatch,
-  SetStateAction,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { createContext, Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
 import { api } from "../services/api";
 import { toast } from "react-hot-toast";
-import { IRegisterNewValueForm } from "../components/Form/RegisterNewValueForm";
+// import { IRegisterNewValueForm } from "../components/Form/RegisterNewValueForm";
 import { UserContext } from "./UserContext";
 import { TTravelSchema } from "../schemas/travelSchema";
+import { TNewValueSchema } from "../schemas/newValueSchema";
 
 interface ITravelProviderProps {
   children: React.ReactNode;
 }
 
 interface ITravelContext {
-  addNewValue: (formData: IRegisterNewValueForm) => Promise<void>;
+  addNewValue: (formData: TNewValueSchema) => Promise<void>;
   loadSavings: () => Promise<void>;
   savings: ISaving[];
-  travel: ITravel | null;
+  travel: ITravel | [];
   setIsOpenModal: Dispatch<SetStateAction<boolean>>;
   isOpenModal: boolean;
   newTravel: (formData: TTravelSchema) => Promise<void>;
@@ -55,20 +49,6 @@ export interface ISaving {
   id: number;
 }
 
-// {
-//   "local": "são paulo",
-//   "userId": 2,
-//   "id": 2,
-//   "month": "abril",
-//   "initialValue": 300,
-//   "tours": 400,
-//   "accommodation": 500,
-//   "food": 500,
-//   "transport": 600,
-//   "shopping": 700,
-//   "others": 200
-// }
-
 interface ITravel {
   accommodation: number;
   food: number;
@@ -87,15 +67,11 @@ interface ITravel {
 export const TravelContext = createContext({} as ITravelContext);
 
 export const TravelProvider = ({ children }: ITravelProviderProps) => {
-  // const [savings, setSavings] = useState<ISaving>({} as ISaving);
-
   const { user } = useContext(UserContext);
 
   const [savings, setSavings] = useState<ISaving[]>([]);
   const [travel, setTravel] = useState(null);
   const [travelId, setTravelId] = useState(null);
-
-  //const [travel, setTravel] = useState([]);
 
   const [isOpenModal, setIsOpenModal] = useState(false);
 
@@ -128,7 +104,7 @@ export const TravelProvider = ({ children }: ITravelProviderProps) => {
   };
 
   // Parte da inclusão das economias do mês e renderização do resumo mensal
-  const addNewValue = async (formData: IRegisterNewValueForm) => {
+  const addNewValue = async (formData: TNewValueSchema) => {
     const body = {
       ...formData,
       userId: idLocalStorage,
@@ -141,6 +117,7 @@ export const TravelProvider = ({ children }: ITravelProviderProps) => {
         },
       });
       setSavings([...savings, response.data]);
+    
     } catch (error) {
       console.log(error);
       toast.error("Ops! Algo deu errado.");
@@ -157,13 +134,13 @@ export const TravelProvider = ({ children }: ITravelProviderProps) => {
           },
         }
       );
-      console.log(data);
-      setTravel(data.travel[0] || null);
-      setTravelId(data.travel[0].id || null);
+      setTravel(data.travel[0] || []);
+      setTravelId(data.travel[0].id);
       setSavings(data.savings || []);
+    
     } catch (error) {
       console.log(error);
-      toast.error("Ops! Algo deu errado.");
+      // toast.error("Ops! Algo deu errado.");
     }
   };
   useEffect(() => {
